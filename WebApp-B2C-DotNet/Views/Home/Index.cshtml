@@ -1,0 +1,29 @@
+﻿@using System.Security.Claims
+
+@if (Request.IsAuthenticated)
+{
+    <h2>You've been signed in!</h2>
+
+    <h5>Here are the claims your application just received:</h5>
+
+    <table class="table table-bordered table-striped table-hover table-condensed">
+        <tr>
+            <th class="claim-type claim-data claim-head">Claim Type</th>
+            <th class="claim-data claim-head">Claim Value</th>
+        </tr>
+
+        @foreach (Claim claim in ClaimsPrincipal.Current.Claims)
+        {
+            <tr>
+                <td class="claim-type claim-data">@claim.Type</td>
+                <td class="claim-data">@claim.Value</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h2>You're not signed in yet...</h2>
+    <h5>Enter your <a href="/Settings">App's Settings</a> first, then Sign Up or Sign In.</h5>
+}
+
