@@ -34,8 +34,8 @@ namespace WebApp_B2C_DotNet
             {
                 Authority = "https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com",
                 ClientId = "ec5465e6-f48e-4ec2-a76a-ea99891a8d84",
-                RedirectUri = "https://aadb2csandbox.azurewebsites.net/",
-                PostLogoutRedirectUri = "https://aadb2csandbox.azurewebsites.net/",
+                RedirectUri = "http://aadb2csandbox.azurewebsites.net/",
+                PostLogoutRedirectUri = "http://aadb2csandbox.azurewebsites.net/",
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
                     AuthenticationFailed = OnAuthenticationFailed,
