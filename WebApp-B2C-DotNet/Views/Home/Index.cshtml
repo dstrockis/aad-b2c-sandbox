@@ -2,28 +2,67 @@
 
 @if (Request.IsAuthenticated)
 {
-    <h2>You've been signed in!</h2>
+    <div>
+        <center>
+            @if (ClaimsPrincipal.Current.HasClaim("newUser", "true"))
+            {
+            <h2>Welcome, new user!</h2>
+            <h5>You've just signed up as a new user in your B2C tenant.</h5>
+            }
+            else
+            {
+            <h2>Welcome back!</h2>
+            <h5>You're currently signed in to the AAD B2C Playground.</h5>
+            }
 
-    <h5>Here are the claims your application just received:</h5>
+            @if (ViewBag.SuccessMessage != null)
+            {
+            <p style="color:green">Your app settings have been successfully saved.</p>
+            }
+            
+            <div>
+                <input type="button" style="margin:10px;width:150px" class="btn btn-primary" onclick="window.location.href='/Account/Profile'" value="Edit Profile" />
+                <input type="button" style="margin:10px;width:150px" class="btn btn-warning" onclick=" window.location.href='/Account/SignOut' " value="Sign Out" />
+            </div>
 
-    <table class="table table-bordered table-striped table-hover table-condensed">
-        <tr>
-            <th class="claim-type claim-data claim-head">Claim Type</th>
-            <th class="claim-data claim-head">Claim Value</th>
-        </tr>
+            <hr />
 
-        @foreach (Claim claim in ClaimsPrincipal.Current.Claims)
-        {
-            <tr>
-                <td class="claim-type claim-data">@claim.Type</td>
-                <td class="claim-data">@claim.Value</td>
-            </tr>
-        }
-    </table>
+            <h5>Here are the claims your application just received:</h5>
+
+            <table class="table table-striped table-hover"> @*table-bordered table-condensed*@
+                <thead>
+                    <tr>
+                        <th>Claim Type</th> @*class="claim-type claim-data claim-head"*@
+                        <th>Claim Value</th> @*class="claim-data claim-head"*@
+                    </tr>
+                </thead>    
+                <tbody>
+                    @foreach (Claim claim in ClaimsPrincipal.Current.Claims)
+                    {
+                        <tr>
+                            <td>@claim.Type</td> @*class="claim-type claim-data"*@
+                            <td>@claim.Value</td> @*class="claim-data"*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </center>
+    </div>
 }
 else
 {
-    <h2>You're not signed in yet...</h2>
-    <h5>Enter your <a href="/Settings">App's Settings</a> first, then Sign Up or Sign In.</h5>
-}
+    <div>
+        <center>
+            <h2>Welcome to the AAD B2C Playground</h2>
+            <h5>Enter your <a href="/Settings">App's Settings</a> first, then choose one of the below.</h5>
+            @if (ViewBag.SuccessMessage != null)
+            {
+                <p style="color:green">Your app settings have been successfully saved.</p>
+            }
 
+            <input type="button" style="margin:10px;width:150px" class="btn btn-primary" onclick="window.location.href='/Account/SignIn'" value="Sign In" />
+            <input type="button" style="margin:10px;width:150px" class="btn btn-primary" onclick=" window.location.href='/Account/SignUp' " value="Sign Up" />
+        </center>
+    
+    </div>
+}

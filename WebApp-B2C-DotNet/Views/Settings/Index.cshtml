@@ -4,39 +4,50 @@
 
 <h2>App Settings</h2>
 
-@if (ViewBag.SuccessMessage != null)
-{ 
-    <p style="color:green">Your app settings have been successfully saved.</p>
-}
+<hr />
 
 @if (ViewBag.ErrorMessage != null)
 {
     <p style="color:red">ViewBag.ErrorMessage</p>
 }
 
-@using (Html.BeginForm("Save", "Settings", FormMethod.Post))
-{
-    <div>
+<form class="form-horizontal" method="post" action="/Settings/Save">
+    <fieldset>
         <div class="form-group">
-            <label for="tenant">B2C Tenant Domain</label>
-            <input type="text" name="tenant" id="tenant" class="form-control" value="@ViewData["tenant"]">
+            <label for="tenant" class="col-lg-2 control-label">B2C Tenant Domain</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="tenant" id="tenant" placeholder="contoso.onmicrosoft.com" value="@ViewData["tenant"]">
+            </div>
         </div>
         <div class="form-group">
-            <label for="client_id">App ID</label>
-            <input type="text" name="client_id" id="client_id" class="form-control" value="@ViewData["client_id"]">
+            <label for="client_id" class="col-lg-2 control-label">App ID</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="client_id" id="client_id" placeholder="ec5465e6-f48e-4ec2-a76a-ea99891a8d84" value="@ViewData["client_id"]">
+            </div>
         </div>
         <div class="form-group">
-            <label for="sign_in_policy">Sign-In Policy ID</label>
-            <input type="text" name="sign_in_policy" id="sign_in_policy" class="form-control" value="@ViewData["sign_in_policy"]">
+            <label for="sign_in_policy" class="col-lg-2 control-label">Sign In Policy</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="sign_in_policy" id="sign_in_policy" placeholder="b2c_1_my_sign_in" value="@ViewData["sign_in_policy"]">
+            </div>
         </div>
         <div class="form-group">
-            <label for="sign_up_policy">Sign-Up Policy ID</label>
-            <input type="text" name="sign_up_policy" id="sign_up_policy" class="form-control" value="@ViewData["sign_up_policy"]">
+            <label for="sign_up_policy" class="col-lg-2 control-label">Sign Up Policy</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="sign_up_policy" id="sign_up_policy" placeholder="b2c_1_my_sign_up" value="@ViewData["sign_up_policy"]">
+            </div>
         </div>
         <div class="form-group">
-            <label for="edit_profile_policy">Edit Profile Policy ID</label>
-            <input type="text" name="edit_profile_policy" id="edit_profile_policy" class="form-control" value="@ViewData["edit_profile_policy"]">
+            <label for="edit_profile_policy" class="col-lg-2 control-label">Sign Up Policy</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="edit_profile_policy" id="edit_profile_policy" placeholder="b2c_1_my_edit_profile" value="@ViewData["edit_profile_policy"]">
+            </div>
         </div>
-        <input type="submit" value="Save" class="btn btn-default">
-    </div>
-}
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+

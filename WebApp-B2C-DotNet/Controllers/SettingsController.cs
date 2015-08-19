@@ -12,9 +12,7 @@ namespace WebApp_B2C_DotNet.Controllers
         // GET: Settings
         public ActionResult Index()
         {
-            ViewData = (ViewDataDictionary) HttpContext.Session["b2c_settings"];
-            ViewBag.SuccessMessage = HttpContext.Session["saved"];
-            HttpContext.Session.Remove("saved");
+            ViewData = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
             return View();
         }
 
@@ -24,7 +22,7 @@ namespace WebApp_B2C_DotNet.Controllers
             ViewDataDictionary dict = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
             if (dict != null)
             {
-                if (dict["tenant"] != null && dict["tenant"] != tenant)
+                if (dict["tenant"] != null && (string)dict["tenant"] != tenant)
                 {
                     HttpContext.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);      
                 }
@@ -41,7 +39,7 @@ namespace WebApp_B2C_DotNet.Controllers
             };
             HttpContext.Session.Add("saved", true);
             HttpContext.Session.Add("b2c_settings", settings);
-            return new RedirectResult("/Settings");
+            return new RedirectResult("/");
         }
     }
 }
