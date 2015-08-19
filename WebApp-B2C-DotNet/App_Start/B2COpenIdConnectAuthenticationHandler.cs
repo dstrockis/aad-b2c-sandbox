@@ -222,6 +222,7 @@ namespace WebApp_B2C_DotNet.App_Start
                 }
 
                 AuthenticationProperties properties = new AuthenticationProperties();
+                properties.RedirectUri = Options.RedirectUri;
                 if (properties == null)
                 {
                     _logger.WriteWarning("The state field is missing or invalid.");

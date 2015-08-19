@@ -11,11 +11,6 @@ namespace WebApp_B2C_DotNet.Controllers
     {
         public ActionResult Index()
         {
-            if (Request.HttpMethod == "POST") 
-            {
-                return new RedirectResult("/");
-            }
-
             ViewData = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
             ViewBag.SuccessMessage = HttpContext.Session["saved"];
             HttpContext.Session.Remove("saved");

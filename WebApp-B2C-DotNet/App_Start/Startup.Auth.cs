@@ -34,15 +34,14 @@ namespace WebApp_B2C_DotNet
             {
                 Authority = "https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com",
                 ClientId = "ec5465e6-f48e-4ec2-a76a-ea99891a8d84",
-                //RedirectUri = "http://aadb2csandbox.azurewebsites.net/",
-                //PostLogoutRedirectUri = "http://aadb2csandbox.azurewebsites.net/",
-                RedirectUri = "https://localhost:44316/",
-                PostLogoutRedirectUri = "https://localhost:44316/",
+                RedirectUri = "http://aadb2cplayground.azurewebsites.net/",
+                PostLogoutRedirectUri = "http://aadb2cplayground.azurewebsites.net/",
+                //RedirectUri = "https://localhost:44316/",
+                //PostLogoutRedirectUri = "https://localhost:44316/",
                 Notifications = new OpenIdConnectAuthenticationNotifications
                 {
                     AuthenticationFailed = OnAuthenticationFailed,
                     RedirectToIdentityProvider = OnRedirectToIdentityProvider,
-                    //SecurityTokenValidated = OnSecurityTokenValidated,
                 },
 
                 Scope = "openid",
@@ -64,16 +63,6 @@ namespace WebApp_B2C_DotNet
             app.Use(typeof(B2COpenIdConnectAuthenticationMiddleware), app, options);
                 
         }
-
-        //private Task OnSecurityTokenValidated(SecurityTokenValidatedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
-        //{
-        //    if (notification.Request.Method == "POST")
-        //    {
-        //        notification.HandleResponse();
-        //        notification.Response.Redirect("/");
-        //    }
-        //    return Task.FromResult(0);
-        //}
 
         private async Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
         {
