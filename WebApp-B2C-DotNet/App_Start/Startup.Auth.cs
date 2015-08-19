@@ -77,14 +77,23 @@ namespace WebApp_B2C_DotNet
                 return;
             }
 
-            B2CConfigurationManager cm = new B2CConfigurationManager(String.Format("https://login.microsoftonline.com/{0}/.well-known/openid-configuration", tenant[0]));
-            OpenIdConnectConfiguration config = await cm.GetConfigurationAsync(new System.Threading.CancellationToken(), policy[0]);
-            notification.ProtocolMessage.IssuerAddress = config.AuthorizationEndpoint;
-            notification.ProtocolMessage.ClientId = client_id[0];
-            notification.ProtocolMessage.SetParameter("prompt", "login");
-            notification.Response.Headers.Remove("tenant");
-            notification.Response.Headers.Remove("client_id");
-            notification.Response.Headers.Remove("policy");
+            try
+            {
+                B2CConfigurationManager cm = new B2CConfigurationManager(String.Format("https://login.microsoftonline.com/{0}/.well-known/openid-configuration", tenant[0]));
+                OpenIdConnectConfiguration config = await cm.GetConfigurationAsync(new System.Threading.CancellationToken(), policy[0]);
+                notification.ProtocolMessage.IssuerAddress = config.AuthorizationEndpoint;
+                notification.ProtocolMessage.ClientId = client_id[0];
+                notification.ProtocolMessage.SetParameter("prompt", "login");
+                notification.Response.Headers.Remove("tenant");
+                notification.Response.Headers.Remove("client_id");
+                notification.Response.Headers.Remove("policy");
+            }
+            catch (Exception e)
+            {
+                notification.HandleResponse();
+                notification.Response.Redirect("/Home/Error?message=Are you SURE you entered your app settings correctly?");
+            }
+            
             return;
         }
 
