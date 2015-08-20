@@ -34,8 +34,8 @@ namespace WebApp_B2C_DotNet
             {
                 Authority = "https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com",
                 ClientId = "ec5465e6-f48e-4ec2-a76a-ea99891a8d84",
-                RedirectUri = "http://aadb2cplayground.azurewebsites.net/",
-                PostLogoutRedirectUri = "http://aadb2cplayground.azurewebsites.net/",
+                RedirectUri = "https://aadb2cplayground.azurewebsites.net/",
+                PostLogoutRedirectUri = "https://aadb2cplayground.azurewebsites.net/",
                 //RedirectUri = "https://localhost:44316/",
                 //PostLogoutRedirectUri = "https://localhost:44316/",
                 Notifications = new OpenIdConnectAuthenticationNotifications
