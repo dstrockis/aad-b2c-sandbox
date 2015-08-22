@@ -49,6 +49,7 @@ namespace WebApp_B2C_DotNet
                 },
 
                 Scope = "openid",
+                ResponseType = "id_token",
                 ConfigurationManager = new B2CConfigurationManager("https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com/.well-known/openid-configuration"),
                 SecurityTokenHandlers = new SecurityTokenHandlerCollection(new List<SecurityTokenHandler> { new MyJwtSecurityTokenHandler() }),
 
