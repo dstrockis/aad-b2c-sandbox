@@ -30,8 +30,12 @@ namespace WebApp_B2C_DotNet.Controllers
             {
                 if (dict["tenant"] != null && (string)dict["tenant"] != tenant)
                 {
-                    HttpContext.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);      
+                    HttpContext.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
                 }
+            }
+            else if (Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             }
 
             ViewDataDictionary settings = new ViewDataDictionary
