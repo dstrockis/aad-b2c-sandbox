@@ -46,9 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.IdentityModel.Protocol.Extensions.1.0.0\lib\net45\Microsoft.IdentityModel.Protocol.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0-rc2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
@@ -146,12 +146,14 @@
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AspNetSessionExtensions.cs" />
     <Compile Include="App_Start\B2CConfigurationManager.cs" />
     <Compile Include="App_Start\B2COpenIdConnectAuthenticationHandler.cs" />
     <Compile Include="App_Start\B2COpenIdConnectAuthenticationMiddleware.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\HttpDocumentRetriever.cs" />
+    <Compile Include="App_Start\MyJwtSecurityTokenHandler.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -161,6 +163,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\ClaimTips.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -173,6 +176,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\default.js" />
     <Content Include="Scripts\handle_fragment.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -181,7 +185,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\profile-dropdown.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

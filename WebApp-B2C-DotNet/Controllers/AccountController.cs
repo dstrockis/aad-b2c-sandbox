@@ -20,15 +20,24 @@ namespace WebApp_B2C_DotNet.Controllers
             if (!Request.IsAuthenticated)
             {
                 ViewDataDictionary dict = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
-                if (dict != null)
+                if (dict == null)
                 {
-                    if (dict["tenant"] != null)
-                        Response.Headers.Add("tenant", (string)dict["tenant"]);
-                    if (dict["client_id"] != null)
-                        Response.Headers.Add("client_id", (string)dict["client_id"]);
-                    if (dict["sign_in_policy"] != null)
-                        Response.Headers.Add("policy", (string)dict["sign_in_policy"]);
+                    dict = new ViewDataDictionary
+                    {
+                        {"tenant", SettingsController.defaultTenant},
+                        {"client_id", SettingsController.defaultClientId},
+                        {"sign_in_policy", SettingsController.defaultSignInPolicy},
+                        {"sign_up_policy", SettingsController.defaultSignUpPolicy},
+                        {"edit_profile_policy", SettingsController.defaultEditProfilePolicy},
+                    };
                 }
+
+                if (dict["tenant"] != null)
+                    Response.Headers.Add("tenant", (string)dict["tenant"]);
+                if (dict["client_id"] != null)
+                    Response.Headers.Add("client_id", (string)dict["client_id"]);
+                if (dict["sign_in_policy"] != null)
+                    Response.Headers.Add("policy", (string)dict["sign_in_policy"]);
                 
                 HttpContext.GetOwinContext().Authentication.Challenge(
                     new AuthenticationProperties
@@ -43,15 +52,24 @@ namespace WebApp_B2C_DotNet.Controllers
             if (!Request.IsAuthenticated)
             {
                 ViewDataDictionary dict = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
-                if (dict != null)
+                if (dict == null)
                 {
-                    if (dict["tenant"] != null)
-                        Response.Headers.Add("tenant", (string)dict["tenant"]);
-                    if (dict["client_id"] != null)
-                        Response.Headers.Add("client_id", (string)dict["client_id"]);
-                    if (dict["sign_up_policy"] != null)
-                        Response.Headers.Add("policy", (string)dict["sign_up_policy"]);
+                    dict = new ViewDataDictionary
+                    {
+                        {"tenant", SettingsController.defaultTenant},
+                        {"client_id", SettingsController.defaultClientId},
+                        {"sign_in_policy", SettingsController.defaultSignInPolicy},
+                        {"sign_up_policy", SettingsController.defaultSignUpPolicy},
+                        {"edit_profile_policy", SettingsController.defaultEditProfilePolicy},
+                    };
                 }
+
+                if (dict["tenant"] != null)
+                    Response.Headers.Add("tenant", (string)dict["tenant"]);
+                if (dict["client_id"] != null)
+                    Response.Headers.Add("client_id", (string)dict["client_id"]);
+                if (dict["sign_up_policy"] != null)
+                    Response.Headers.Add("policy", (string)dict["sign_up_policy"]);
 
                 HttpContext.GetOwinContext().Authentication.Challenge(
                     new AuthenticationProperties
@@ -68,15 +86,24 @@ namespace WebApp_B2C_DotNet.Controllers
             if (Request.IsAuthenticated)
             {
                 ViewDataDictionary dict = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
-                if (dict != null)
+                if (dict == null)
                 {
-                    if (dict["tenant"] != null)
-                        Response.Headers.Add("tenant", (string)dict["tenant"]);
-                    if (dict["client_id"] != null)
-                        Response.Headers.Add("client_id", (string)dict["client_id"]);
-                    if (dict["edit_profile_policy"] != null)
-                        Response.Headers.Add("policy", (string)dict["edit_profile_policy"]);
+                    dict = new ViewDataDictionary
+                    {
+                        {"tenant", SettingsController.defaultTenant},
+                        {"client_id", SettingsController.defaultClientId},
+                        {"sign_in_policy", SettingsController.defaultSignInPolicy},
+                        {"sign_up_policy", SettingsController.defaultSignUpPolicy},
+                        {"edit_profile_policy", SettingsController.defaultEditProfilePolicy},
+                    };
                 }
+
+                if (dict["tenant"] != null)
+                    Response.Headers.Add("tenant", (string)dict["tenant"]);
+                if (dict["client_id"] != null)
+                    Response.Headers.Add("client_id", (string)dict["client_id"]);
+                if (dict["edit_profile_policy"] != null)
+                    Response.Headers.Add("policy", (string)dict["edit_profile_policy"]);
 
                 HttpContext.GetOwinContext().Authentication.Challenge(
                     new AuthenticationProperties

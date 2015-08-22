@@ -21,7 +21,10 @@ namespace WebApp_B2C_DotNet
 	public partial class Startup
 	{
         private const string discoverySuffix = "/.well-known/openid-configuration";
-        public const string AcrClaimType = "http://schemas.microsoft.com/claims/authnclassreference";
+        public const string AcrClaimType = "acr";
+        public const string IssuerClaimType = "iss";
+        public const string AudClaimType = "aud";
+        public const string NewUserClaimType = "newUser";
 
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -42,10 +45,12 @@ namespace WebApp_B2C_DotNet
                 {
                     AuthenticationFailed = OnAuthenticationFailed,
                     RedirectToIdentityProvider = OnRedirectToIdentityProvider,
+                    SecurityTokenValidated = OnSecurityTokenValidated,
                 },
 
                 Scope = "openid",
                 ConfigurationManager = new B2CConfigurationManager("https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com/.well-known/openid-configuration"),
+                SecurityTokenHandlers = new SecurityTokenHandlerCollection(new List<SecurityTokenHandler> { new MyJwtSecurityTokenHandler() }),
 
                 TokenValidationParameters = new TokenValidationParameters
                 {
@@ -60,8 +65,30 @@ namespace WebApp_B2C_DotNet
                 },
             };
 
+            app.RequireAspNetSession();
+
             app.Use(typeof(B2COpenIdConnectAuthenticationMiddleware), app, options);
                 
+        }
+
+        private async Task OnSecurityTokenValidated(SecurityTokenValidatedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
+        {
+            if (string.IsNullOrEmpty(notification.ProtocolMessage.State)) 
+            {
+                string tenantId = notification.AuthenticationTicket.Identity.FindFirst(IssuerClaimType).Value.Split('/')[3];
+                B2CConfigurationManager mgr = new B2CConfigurationManager(String.Format("https://login.microsoftonline.com/{0}/.well-known/openid-configuration", tenantId));
+                OpenIdConnectConfiguration config = await mgr.GetConfigurationAsync(System.Threading.CancellationToken.None, notification.AuthenticationTicket.Identity.FindFirst(AcrClaimType).Value);
+                string tenant = config.AuthorizationEndpoint.Split('/')[4];
+                ViewDataDictionary settings = new ViewDataDictionary
+                {
+                    {"tenant", tenant},
+                    {"client_id", notification.AuthenticationTicket.Identity.FindFirst(AudClaimType).Value},
+                    {"sign_up_policy", notification.AuthenticationTicket.Identity.HasClaim(NewUserClaimType, "true") ? notification.AuthenticationTicket.Identity.FindFirst(AcrClaimType).Value : null},
+                    {"sign_in_policy", null},
+                    {"edit_profile_policy", null},
+                };
+                HttpContext.Current.Session.Add("b2c_settings", settings);
+            }
         }
 
         private async Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)

@@ -1,9 +1,4 @@
-﻿/*form  { display: table }
-p     { display: table-row;  }
-label { display: table-cell; margin: 10px }
-input { display: table-cell; }*/
-
-#sign-in-message:hover {
+﻿#sign-in-message:hover {
     color: rgb(153, 153, 153);
 }
 
@@ -77,27 +72,25 @@ input[type="checkbox"].input-validation-error {
     cursor:pointer;
 }
 
-/*.claim-table, table, td, th {
-    margin-bottom:30px;
-    border: solid;
-    border-width:thin;
-    border-color:rgb(187, 187, 187);
-    background-color:rgb(238,238,238);
+#redirect_uri {
+    cursor:text;
+}
+
+.form-control {
+    width: 400px;
+    max-width: 400px;
+}
+
+.btn-link:focus {
+    text-decoration:none;
+}
+
+.btn-link:focus:hover {
+    text-decoration:underline;
+}
+
+.claim-td {
+    display:inline;
     width:100%;
-    table-layout:fixed;
+    white-space:nowrap
 }
-
-.claim-type {
-    padding-right: 30px;
-    text-align:left;
-}
-
-.claim-data {
-    padding-left:5px;
-    overflow-x:hidden;
-    text-overflow:ellipsis;
-}
-
-.claim-head {
-    background-color:rgb(157, 201, 212);
-}*/

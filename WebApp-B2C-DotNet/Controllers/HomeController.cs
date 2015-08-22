@@ -11,7 +11,20 @@ namespace WebApp_B2C_DotNet.Controllers
     {
         public ActionResult Index()
         {
-            ViewData = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
+            ViewDataDictionary dict = (ViewDataDictionary)HttpContext.Session["b2c_settings"];
+            if (dict == null) 
+            {
+                dict = new ViewDataDictionary
+                {
+                    {"tenant", SettingsController.defaultTenant},
+                    {"client_id", SettingsController.defaultClientId},
+                    {"sign_in_policy", SettingsController.defaultSignInPolicy},
+                    {"sign_up_policy", SettingsController.defaultSignUpPolicy},
+                    {"edit_profile_policy", SettingsController.defaultEditProfilePolicy},
+                };
+            }
+
+            ViewData = dict;
             ViewBag.SuccessMessage = HttpContext.Session["saved"];
             HttpContext.Session.Remove("saved");
             return View();

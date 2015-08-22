@@ -4,50 +4,68 @@
 
 <h2>App Settings</h2>
 
-<hr />
+<hr style="margin-bottom:5px" />
 
 @if (ViewBag.ErrorMessage != null)
 {
     <p style="color:red">ViewBag.ErrorMessage</p>
 }
 
-<form class="form-horizontal" method="post" action="/Settings/Save">
-    <fieldset>
-        <div class="form-group">
-            <label for="tenant" class="col-lg-2 control-label">B2C Tenant Domain</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="tenant" id="tenant" placeholder="contoso.onmicrosoft.com" value="@ViewData["tenant"]">
-            </div>
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+        <div style="width:400px">
+            <center>
+                <a class="btn btn-link" href="javascript:void(0)" style="vertical-align:bottom" id="default-tenant" onclick="javascript:fillDefault()">Use the AAD B2C Playground example directory</a>
+            </center>
         </div>
-        <div class="form-group">
-            <label for="client_id" class="col-lg-2 control-label">App ID</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="client_id" id="client_id" placeholder="ec5465e6-f48e-4ec2-a76a-ea99891a8d84" value="@ViewData["client_id"]">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="sign_up_policy" class="col-lg-2 control-label">Sign Up Policy</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="sign_up_policy" id="sign_up_policy" placeholder="b2c_1_my_sign_up" value="@ViewData["sign_up_policy"]">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="sign_in_policy" class="col-lg-2 control-label">Sign In Policy</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="sign_in_policy" id="sign_in_policy" placeholder="b2c_1_my_sign_in" value="@ViewData["sign_in_policy"]">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="edit_profile_policy" class="col-lg-2 control-label">Edit Profile Policy</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="edit_profile_policy" id="edit_profile_policy" placeholder="b2c_1_my_edit_profile" value="@ViewData["edit_profile_policy"]">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <button type="submit" class="btn btn-primary">Save Settings</button>
-            </div>
-        </div>
-    </fieldset>
-</form>
+    </div>
+</div>
 
+<div>
+    <form class="form-horizontal" method="post" action="/Settings/Save">
+        <fieldset>
+            <div class="form-group">
+                <label for="tenant" class="col-lg-2 control-label">B2C Tenant Domain</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="tenant" id="tenant" placeholder="contoso.onmicrosoft.com" value="@ViewData["tenant"]">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="client_id" class="col-lg-2 control-label">App ID</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="client_id" id="client_id" placeholder="ec5465e6-f48e-4ec2-a76a-ea99891a8d84" value="@ViewData["client_id"]">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sign_up_policy" class="col-lg-2 control-label">Sign Up Policy</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="sign_up_policy" id="sign_up_policy" placeholder="b2c_1_my_sign_up" value="@ViewData["sign_up_policy"]">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sign_in_policy" class="col-lg-2 control-label">Sign In Policy</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="sign_in_policy" id="sign_in_policy" placeholder="b2c_1_my_sign_in" value="@ViewData["sign_in_policy"]">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="edit_profile_policy" class="col-lg-2 control-label">Edit Profile Policy</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="edit_profile_policy" id="edit_profile_policy" placeholder="b2c_1_my_edit_profile" value="@ViewData["edit_profile_policy"]">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="redirect_uri" class="col-lg-2 control-label">Redirect URI</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="redirect_uri" id="redirect_uri" value="https://aadb2cplayground.azurewebsites.net/" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -6,13 +6,15 @@
         <center>
             @if (ClaimsPrincipal.Current.HasClaim("newUser", "true"))
             {
-            <h2>Welcome, new user!</h2>
-            <h5>You've just signed up as a new user in your B2C tenant.</h5>
+                <h2>Welcome, new user!</h2>
+                <h5>You've just signed up as a new user in the B2C directory <strong class="text-primary">@ViewData["tenant"]</strong>.</h5>
+                <h5>Edit the <a href="/Settings">App's Settings</a> to change directories, apps, and policies.</h5>
             }
             else
             {
-            <h2>Welcome back!</h2>
-            <h5>You're currently signed in to the AAD B2C Playground.</h5>
+                <h2>Welcome back!</h2>
+                <h5>You're currently signed in to the AAD B2C Playground, using the <strong class="text-primary">@ViewData["tenant"]</strong> directory.</h5>
+                <h5>Edit the <a href="/Settings">App's Settings</a> to change directories, apps, and policies.</h5>
             }
 
             @if (ViewBag.SuccessMessage != null)
@@ -40,8 +42,8 @@
                     @foreach (Claim claim in ClaimsPrincipal.Current.Claims)
                     {
                         <tr>
-                            <td>@claim.Type</td> @*class="claim-type claim-data"*@
-                            <td>@claim.Value</td> @*class="claim-data"*@
+                            <td><div data-toggle="tooltip" data-placement="top" title="" data-original-title="@WebApp_B2C_DotNet.Utils.ClaimTips.Names.FirstOrDefault(c => c.Key.Equals(claim.Type)).Value" class="claim-td">@claim.Type</div></td> @*class="claim-type claim-data"*@
+                            <td><div data-toggle="tooltip" data-placement="top" title="" data-original-title="@WebApp_B2C_DotNet.Utils.ClaimTips.Descriptions.FirstOrDefault(c => c.Key.Equals(claim.Type)).Value" class="claim-td">@claim.Value</div></td> @*class="claim-data"*@
                         </tr>
                     }
                 </tbody>
@@ -54,14 +56,15 @@ else
     <div>
         <center>
             <h2>Welcome to the AAD B2C Playground</h2>
-            <h5>Enter your <a href="/Settings">App's Settings</a> first, then choose one of the below.</h5>
+            <h5>You're currently using the B2C directory <strong class="text-primary">@ViewData["tenant"]</strong></h5>
+            <h5>Edit the <a href="/Settings">App's Settings</a> to change directories, apps, and policies.</h5>
             @if (ViewBag.SuccessMessage != null)
             {
                 <p style="color:green">Your app settings have been successfully saved.</p>
             }
-
-            <input type="button" style="margin:10px;width:150px" class="btn btn-primary" onclick="window.location.href='/Account/SignIn'" value="Sign In" />
+            
             <input type="button" style="margin:10px;width:150px" class="btn btn-primary" onclick=" window.location.href='/Account/SignUp' " value="Sign Up" />
+            <input type="button" style="margin:10px;width:150px" class="btn btn-primary" onclick="window.location.href='/Account/SignIn'" value="Sign In" />
         </center>
     
     </div>
