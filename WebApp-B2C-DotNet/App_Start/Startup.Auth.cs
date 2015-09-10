@@ -50,7 +50,7 @@ namespace WebApp_B2C_DotNet
 
                 Scope = "openid",
                 ResponseType = "id_token",
-                ConfigurationManager = new B2CConfigurationManager("https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com/.well-known/openid-configuration"),
+                ConfigurationManager = new B2CConfigurationManager("https://login.microsoftonline.com/strockisdevthree.onmicrosoft.com/v2.0/.well-known/openid-configuration"),
                 SecurityTokenHandlers = new SecurityTokenHandlerCollection(new List<SecurityTokenHandler> { new MyJwtSecurityTokenHandler() }),
 
                 TokenValidationParameters = new TokenValidationParameters
@@ -76,10 +76,7 @@ namespace WebApp_B2C_DotNet
         {
             if (string.IsNullOrEmpty(notification.ProtocolMessage.State)) 
             {
-                string tenantId = notification.AuthenticationTicket.Identity.FindFirst(IssuerClaimType).Value.Split('/')[3];
-                B2CConfigurationManager mgr = new B2CConfigurationManager(String.Format("https://login.microsoftonline.com/{0}/.well-known/openid-configuration", tenantId));
-                OpenIdConnectConfiguration config = await mgr.GetConfigurationAsync(System.Threading.CancellationToken.None, notification.AuthenticationTicket.Identity.FindFirst(AcrClaimType).Value);
-                string tenant = config.AuthorizationEndpoint.Split('/')[4];
+                string tenant = notification.AuthenticationTicket.Identity.FindFirst(IssuerClaimType).Value.Split('/')[3];
                 ViewDataDictionary settings = new ViewDataDictionary
                 {
                     {"tenant", tenant},
@@ -107,7 +104,7 @@ namespace WebApp_B2C_DotNet
 
             try
             {
-                B2CConfigurationManager cm = new B2CConfigurationManager(String.Format("https://login.microsoftonline.com/{0}/.well-known/openid-configuration", tenant[0]));
+                B2CConfigurationManager cm = new B2CConfigurationManager(String.Format("https://login.microsoftonline.com/{0}/v2.0/.well-known/openid-configuration", tenant[0]));
                 OpenIdConnectConfiguration config = await cm.GetConfigurationAsync(new System.Threading.CancellationToken(), policy[0]);
                 notification.ProtocolMessage.IssuerAddress = config.AuthorizationEndpoint;
                 notification.ProtocolMessage.ClientId = client_id[0];
