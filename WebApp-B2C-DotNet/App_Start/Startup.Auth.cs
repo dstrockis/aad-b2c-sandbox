@@ -15,6 +15,8 @@ using System.Web.Mvc;
 using System.Configuration;
 using System.IdentityModel.Tokens;
 using WebApp_B2C_DotNet.App_Start;
+using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.Security.Jwt;
 
 namespace WebApp_B2C_DotNet
 {
@@ -69,7 +71,22 @@ namespace WebApp_B2C_DotNet
             app.RequireAspNetSession();
 
             app.Use(typeof(B2COpenIdConnectAuthenticationMiddleware), app, options);
-                
+
+            TokenValidationParameters tvps = new TokenValidationParameters
+            {
+                ValidAudience = "ec5465e6-f48e-4ec2-a76a-ea99891a8d84",
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = false,
+            };
+
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions
+            {
+                // This SecurityTokenProvider fetches the Azure AD B2C metadata & signing keys from the OpenIDConnect metadata endpoint
+                AccessTokenFormat = new JwtFormat(tvps, new OpenIdConnectCachingSecurityTokenProvider("https://login.microsoftonline.com/fabrikamb2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=b2c_1_sign_in")),
+                AuthenticationType = "AADBearer",
+            });
+
         }
 
         private async Task OnSecurityTokenValidated(SecurityTokenValidatedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
